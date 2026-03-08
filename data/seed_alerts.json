@@ -1,0 +1,102 @@
+[
+  {
+    "id": "alert-001",
+    "timestamp": "2025-03-01T09:15:00Z",
+    "location": "Downtown – Oak St & 5th Ave",
+    "category": "digital_threat",
+    "description": "Multiple residents on Oak Street received identical emails claiming to be from PG&E requesting immediate payment via gift card. The email contains a link to a spoofed login page at pge-billing-update.xyz.",
+    "severity": "high",
+    "status": "verified",
+    "source": "Neighborhood Watch Report"
+  },
+  {
+    "id": "alert-002",
+    "timestamp": "2025-03-01T14:30:00Z",
+    "location": "Westside – Maple Ridge Apartments",
+    "category": "physical_safety",
+    "description": "Several package thefts reported at Maple Ridge Apartments over the past week. A resident captured doorbell camera footage showing the same individual taking packages between 2-4 PM on weekdays.",
+    "severity": "medium",
+    "status": "verified",
+    "source": "Resident Report"
+  },
+  {
+    "id": "alert-003",
+    "timestamp": "2025-03-02T08:00:00Z",
+    "location": "Citywide",
+    "category": "digital_threat",
+    "description": "LocalCredit Union issued a notice that their member database was accessed by an unauthorized party on Feb 28. Approximately 12,000 accounts may have had names and email addresses exposed. No financial data was compromised.",
+    "severity": "high",
+    "status": "verified",
+    "source": "Official Press Release"
+  },
+  {
+    "id": "alert-004",
+    "timestamp": "2025-03-02T11:45:00Z",
+    "location": "Eastside – Elm Park",
+    "category": "physical_safety",
+    "description": "Broken streetlight on the north side of Elm Park near the playground has been out for three nights. Multiple residents have expressed concern about visibility for evening walkers.",
+    "severity": "low",
+    "status": "unverified",
+    "source": "Community Forum Post"
+  },
+  {
+    "id": "alert-005",
+    "timestamp": "2025-03-02T16:20:00Z",
+    "location": "Northside – Pine St",
+    "category": "scam",
+    "description": "Door-to-door individuals claiming to represent a solar panel company are asking for Social Security numbers as part of a 'credit pre-qualification.' The company name does not appear in the state contractor registry.",
+    "severity": "high",
+    "status": "verified",
+    "source": "Resident Report"
+  },
+  {
+    "id": "alert-006",
+    "timestamp": "2025-03-03T07:30:00Z",
+    "location": "Westside – Public Library WiFi",
+    "category": "digital_threat",
+    "description": "IT staff at the Westside Public Library detected a rogue WiFi access point named 'Library_Free_WiFi_5G' mimicking the legitimate network. Users who connected may have had unencrypted traffic intercepted.",
+    "severity": "high",
+    "status": "verified",
+    "source": "Library IT Department"
+  },
+  {
+    "id": "alert-007",
+    "timestamp": "2025-03-03T13:00:00Z",
+    "location": "Downtown – Main St",
+    "category": "scam",
+    "description": "Fake parking meter QR code stickers were found on three meters along Main Street. Scanning the code directs users to a phishing site that collects credit card information.",
+    "severity": "high",
+    "status": "verified",
+    "source": "City Parking Authority"
+  },
+  {
+    "id": "alert-008",
+    "timestamp": "2025-03-04T09:00:00Z",
+    "location": "Southside – River Walk Trail",
+    "category": "physical_safety",
+    "description": "A section of the River Walk Trail near mile marker 3 has significant erosion after recent rains. The guardrail is partially collapsed. Parks department has been notified but no repair date set.",
+    "severity": "medium",
+    "status": "verified",
+    "source": "Parks & Recreation Notice"
+  },
+  {
+    "id": "alert-009",
+    "timestamp": "2025-03-04T15:10:00Z",
+    "location": "Eastside – Sunrise Senior Center",
+    "category": "scam",
+    "description": "Seniors at the Sunrise Center report receiving phone calls from someone impersonating Medicare, asking them to 'verify' their Social Security number to avoid losing coverage. This is a known seasonal scam.",
+    "severity": "high",
+    "status": "verified",
+    "source": "Senior Center Staff"
+  },
+  {
+    "id": "alert-010",
+    "timestamp": "2025-03-05T10:00:00Z",
+    "location": "Citywide",
+    "category": "digital_threat",
+    "description": "A new SMS phishing campaign is circulating, claiming recipients have an unpaid toll and linking to a fake payment portal. The messages come from various short codes and use urgency language like 'pay within 24 hours to avoid penalties.'",
+    "severity": "medium",
+    "status": "unverified",
+    "source": "Community Forum Post"
+  }
+]

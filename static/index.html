@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Community Guardian</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0e1117;
+      --surface:   #161b22;
+      --surface2:  #1c2333;
+      --border:    #2a3140;
+      --text:      #e2e8f0;
+      --text-dim:  #8b95a8;
+      --accent:    #58a6ff;
+      --green:     #3fb950;
+      --yellow:    #d29922;
+      --red:       #f85149;
+      --orange:    #db6d28;
+      --radius:    10px;
+    }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── Header ─────────────────────────── */
+    .header {
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--surface);
+    }
+    .header .shield { font-size: 1.5rem; }
+    .header h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .header .tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      background: rgba(88, 166, 255, 0.12);
+      color: var(--accent);
+      padding: 0.2rem 0.6rem;
+      border-radius: 99px;
+      margin-left: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .header .spacer { flex: 1; }
+    .header .stats {
+      display: flex;
+      gap: 1.25rem;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+    .header .stats strong { color: var(--text); }
+
+    /* ── Layout ──────────────────────────── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem;
+    }
+
+    /* ── Controls bar ────────────────────── */
+    .controls {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .search-box {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.6rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-size: 0.85rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .search-box:focus { border-color: var(--accent); }
+    .search-box::placeholder { color: var(--text-dim); }
+
+    select.filter {
+      padding: 0.6rem 0.85rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-size: 0.8rem;
+      font-family: inherit;
+      cursor: pointer;
+      outline: none;
+    }
+    select.filter:focus { border-color: var(--accent); }
+
+    .btn {
+      padding: 0.6rem 1.15rem;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 0.8rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .btn:hover { opacity: 0.88; }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { color: var(--text); border-color: var(--text-dim); }
+
+    /* ── Alert cards ─────────────────────── */
+    .alert-list { display: flex; flex-direction: column; gap: 0.75rem; }
+
+    .alert-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.15rem 1.35rem;
+      transition: border-color 0.15s;
+      cursor: default;
+    }
+    .alert-card:hover { border-color: var(--text-dim); }
+
+    .alert-card .top-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.18rem 0.55rem;
+      border-radius: 5px;
+    }
+    .badge-high     { background: rgba(248,81,73,0.15); color: var(--red); }
+    .badge-medium   { background: rgba(210,153,34,0.15); color: var(--yellow); }
+    .badge-low      { background: rgba(63,185,80,0.15); color: var(--green); }
+    .badge-cat {
+      background: rgba(88,166,255,0.1);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .badge-status {
+      font-weight: 600;
+      margin-left: auto;
+    }
+    .badge-verified   { background: rgba(63,185,80,0.12); color: var(--green); }
+    .badge-unverified { background: rgba(210,153,34,0.12); color: var(--yellow); }
+    .badge-resolved   { background: rgba(88,166,255,0.12); color: var(--accent); }
+    .badge-dismissed  { background: rgba(139,149,168,0.12); color: var(--text-dim); }
+
+    .alert-card .summary {
+      font-size: 0.92rem;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+    }
+    .alert-card .desc {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      margin-bottom: 0.65rem;
+      line-height: 1.55;
+    }
+    .alert-card .meta {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .meta span { white-space: nowrap; }
+
+    .actions-list {
+      margin-top: 0.65rem;
+      padding: 0.75rem 1rem;
+      background: var(--surface2);
+      border-radius: 7px;
+      font-size: 0.8rem;
+    }
+    .actions-list .actions-title {
+      font-weight: 700;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      margin-bottom: 0.45rem;
+    }
+    .actions-list ul {
+      list-style: none;
+      padding: 0;
+    }
+    .actions-list li {
+      padding: 0.2rem 0;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .actions-list li::before {
+      content: "→ ";
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .ai-tag {
+      display: inline-block;
+      font-size: 0.6rem;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 0.12rem 0.4rem;
+      border-radius: 4px;
+      background: rgba(63,185,80,0.1);
+      color: var(--green);
+    }
+    .ai-tag.fallback { background: rgba(210,153,34,0.1); color: var(--yellow); }
+
+    /* ── Modal ────────────────────────────── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem;
+      width: 90%;
+      max-width: 520px;
+    }
+    .modal h2 {
+      font-size: 1.1rem;
+      margin-bottom: 1.25rem;
+    }
+    .modal label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-dim);
+      margin-bottom: 0.3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .modal input, .modal textarea {
+      width: 100%;
+      padding: 0.6rem 0.85rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.85rem;
+      outline: none;
+      margin-bottom: 1rem;
+      transition: border-color 0.15s;
+    }
+    .modal input:focus, .modal textarea:focus { border-color: var(--accent); }
+    .modal textarea { resize: vertical; min-height: 100px; }
+    .modal .btn-row {
+      display: flex;
+      gap: 0.6rem;
+      justify-content: flex-end;
+      margin-top: 0.5rem;
+    }
+    .modal .error-msg {
+      font-size: 0.78rem;
+      color: var(--red);
+      margin-bottom: 0.75rem;
+      display: none;
+    }
+    .modal .spinner {
+      display: none;
+      font-size: 0.78rem;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    /* ── Empty state ─────────────────────── */
+    .empty {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+
+    /* ── Responsive ──────────────────────── */
+    @media (max-width: 640px) {
+      .header { padding: 1rem; flex-wrap: wrap; }
+      .container { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <span class="shield">🛡</span>
+  <h1>Community Guardian</h1>
+  <span class="tag">AI-Powered</span>
+  <div class="spacer"></div>
+  <div class="stats">
+    <span><strong id="stat-total">0</strong> alerts</span>
+    <span><strong id="stat-high" style="color:var(--red)">0</strong> high</span>
+  </div>
+</header>
+
+<!-- Main -->
+<div class="container">
+
+  <!-- Controls -->
+  <div class="controls">
+    <input class="search-box" id="searchInput" type="text" placeholder="Search alerts..." />
+    <select class="filter" id="filterCategory">
+      <option value="">All Categories</option>
+      <option value="digital_threat">Digital Threat</option>
+      <option value="scam">Scam</option>
+      <option value="physical_safety">Physical Safety</option>
+    </select>
+    <select class="filter" id="filterSeverity">
+      <option value="">All Severity</option>
+      <option value="high">High</option>
+      <option value="medium">Medium</option>
+      <option value="low">Low</option>
+    </select>
+    <button class="btn btn-primary" onclick="openModal()">+ New Report</button>
+  </div>
+
+  <!-- Alert list -->
+  <div class="alert-list" id="alertList">
+    <div class="empty">Loading alerts...</div>
+  </div>
+</div>
+
+<!-- Submit Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h2>Submit a Safety Report</h2>
+    <div class="error-msg" id="modalError"></div>
+    <div class="spinner" id="modalSpinner">Processing with AI... this may take a moment.</div>
+
+    <label for="inputLocation">Location</label>
+    <input id="inputLocation" type="text" placeholder="e.g. Downtown — Oak St & 5th Ave" />
+
+    <label for="inputDesc">Description</label>
+    <textarea id="inputDesc" placeholder="Describe the safety concern in detail..."></textarea>
+
+    <label for="inputSource">Source (optional)</label>
+    <input id="inputSource" type="text" placeholder="e.g. Resident Report, Neighborhood Watch" />
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" id="submitBtn" onclick="submitAlert()">Submit Report</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = '';  // same origin
+
+// ── State ──
+let debounceTimer;
+
+// ── Fetch & Render ──
+async function fetchAlerts() {
+  const q = document.getElementById('searchInput').value.trim();
+  const category = document.getElementById('filterCategory').value;
+  const severity = document.getElementById('filterSeverity').value;
+
+  const params = new URLSearchParams();
+  if (q) params.set('q', q);
+  if (category) params.set('category', category);
+  if (severity) params.set('severity', severity);
+
+  try {
+    const res = await fetch(`${API}/alerts?${params}`);
+    const data = await res.json();
+    renderAlerts(data.alerts);
+    document.getElementById('stat-total').textContent = data.count;
+    document.getElementById('stat-high').textContent =
+      data.alerts.filter(a => a.severity === 'high').length;
+  } catch (err) {
+    console.error('Failed to fetch alerts:', err);
+  }
+}
+
+function renderAlerts(alerts) {
+  const container = document.getElementById('alertList');
+  if (!alerts.length) {
+    container.innerHTML = '<div class="empty">No alerts match your filters.</div>';
+    return;
+  }
+  container.innerHTML = alerts.map(a => {
+    const catLabel = (a.category || 'uncategorized').replace('_', ' ');
+    const statusClass = `badge-${a.status || 'unverified'}`;
+    const sevClass = `badge-${a.severity || 'medium'}`;
+    const aiClass = a.ai_processed ? '' : 'fallback';
+    const aiLabel = a.ai_processed ? 'AI' : 'FALLBACK';
+    const summary = a.summary || a.description.split('. ')[0] + '.';
+    const actions = a.actions || [];
+    const ts = a.timestamp ? new Date(a.timestamp).toLocaleDateString('en-US', {
+      month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+    }) : '';
+
+    return `
+      <div class="alert-card">
+        <div class="top-row">
+          <span class="badge ${sevClass}">${a.severity}</span>
+          <span class="badge badge-cat">${catLabel}</span>
+          <span class="ai-tag ${aiClass}">${aiLabel}</span>
+          <span class="badge badge-status ${statusClass}">${a.status || 'unverified'}</span>
+        </div>
+        <div class="summary">${esc(summary)}</div>
+        <div class="desc">${esc(a.description)}</div>
+        ${actions.length ? `
+        <div class="actions-list">
+          <div class="actions-title">Recommended Actions</div>
+          <ul>${actions.map(act => `<li>${esc(act)}</li>`).join('')}</ul>
+        </div>` : ''}
+        <div class="meta">
+          <span>📍 ${esc(a.location)}</span>
+          <span>📄 ${esc(a.source || 'Community Report')}</span>
+          <span>🕐 ${ts}</span>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function esc(s) {
+  const d = document.createElement('div');
+  d.textContent = s || '';
+  return d.innerHTML;
+}
+
+// ── Submit ──
+function openModal() {
+  document.getElementById('modal').classList.add('open');
+  document.getElementById('modalError').style.display = 'none';
+  document.getElementById('modalSpinner').style.display = 'none';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.getElementById('inputLocation').value = '';
+  document.getElementById('inputDesc').value = '';
+  document.getElementById('inputSource').value = '';
+}
+
+async function submitAlert() {
+  const location = document.getElementById('inputLocation').value.trim();
+  const description = document.getElementById('inputDesc').value.trim();
+  const source = document.getElementById('inputSource').value.trim() || 'Community Report';
+  const errorEl = document.getElementById('modalError');
+  const spinnerEl = document.getElementById('modalSpinner');
+
+  // client-side validation
+  if (!location || location.length < 2) {
+    errorEl.textContent = 'Please enter a valid location (at least 2 characters).';
+    errorEl.style.display = 'block';
+    return;
+  }
+  if (!description || description.length < 10) {
+    errorEl.textContent = 'Please provide a detailed description (at least 10 characters).';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  errorEl.style.display = 'none';
+  spinnerEl.style.display = 'block';
+  document.getElementById('submitBtn').disabled = true;
+
+  try {
+    const res = await fetch(`${API}/alerts`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ location, description, source }),
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.detail || 'Submission failed.');
+    }
+    closeModal();
+    fetchAlerts();
+  } catch (err) {
+    errorEl.textContent = err.message;
+    errorEl.style.display = 'block';
+  } finally {
+    spinnerEl.style.display = 'none';
+    document.getElementById('submitBtn').disabled = false;
+  }
+}
+
+// ── Events ──
+document.getElementById('searchInput').addEventListener('input', () => {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(fetchAlerts, 300);
+});
+document.getElementById('filterCategory').addEventListener('change', fetchAlerts);
+document.getElementById('filterSeverity').addEventListener('change', fetchAlerts);
+
+// close modal on overlay click
+document.getElementById('modal').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) closeModal();
+});
+
+// ── Init ──
+fetchAlerts();
+</script>
+</body>
+</html>

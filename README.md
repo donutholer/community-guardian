@@ -194,6 +194,6 @@ Run with: `pytest tests/ -v`
 
 ## 📺 Video
 
-🔗 [Watch the 5–7 minute demo video](#) *(link to be added after recording)*
+[🔗 [Watch the 5–7 minute demo video](#) *(link to be added after recording)*](https://youtu.be/ZW9QFoumAx8)
 
 ---
